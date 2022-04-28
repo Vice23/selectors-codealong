@@ -77,3 +77,68 @@ Dark Green - #1f2d2e
 Light Green - #234534
 Orange - #ED6B55
  */
+
+.toggleLabel {
+    line-height: 40px;
+    padding-right: 100px;
+    margin: 15px 0;
+
+    /* to pair with the absolute styling in the toggleLabel::before */
+    position: relative;
+}
+
+/* let's create the toggle shape, positioned always to the right of the label (its parent element 
+Before means wherever we have X element (in this case the .taggleLabel), we should have this element before it */
+.toggleLabel::before {
+    /* when we create a before element, we have to have content, even if it's empty */
+    content:"";
+    /* making the general dimensions of the 'box' */
+    width: 80px;
+    height: 40px;
+    background-color: #1f2d2e;
+    /* we want these things to be a certain direction based on where the text is - we want it to the right of the text no matter what. 
+    
+    Position: absolute means based on the position of something else (its parent which we style position: relative) , we want this to be somewhere in particular */
+    display:block;
+    position: absolute;
+    right: 0; 
+    /* aka immediately to the right of the labels */
+    border-radius: 100px;
+}
+
+/* let's create the white circle for the toggle */
+.toggleLabel::after {
+    /* make the shape */
+    content:"";
+    width: 30px;
+    height: 30px;
+    background-color:white;
+    border-radius: 50%;
+
+    /* so it can take with and height, add display block and position it (remember we already made the parent element relative*/
+    display:block;
+    position:absolute;
+
+    /* hint: use the dev tools and up/down arrows to test out positioning an element */
+    right: 45px;
+    top: 5px;
+}
+
+
+input[type="checkbox"]{
+    /* has the checkbox give up their footprint */
+    position: absolute;
+    /* makes them invisible altogether - they're still hanging out in the 'keeping' text word. Another way is to position them waaaay outside of the page*/
+    opacity: 0;
+}
+
+input[type="checkbox"]:checked + .toggleLabel::after {
+    right: 5px;
+}
+
+/* when our toggle label is active or focused (for accessibility) it will change color */
+
+input[type="checkbox"]:active +.toggleLabel::before, 
+input[type="checkbox"]:focus +.toggleLabel::before {
+    background-color: #ED6B55;
+}
